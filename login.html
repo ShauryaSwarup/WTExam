@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="styles.css" />
+
+        <title>LOGIN PAGE</title>
+    </head>
+    <body>
+        LOGIN PAGE
+        <div class="container">
+            <form id="myForm" onsubmit="submitForm()">
+                <label for="regid">Registration ID</label>
+                <input type="text" id="regid" name="regid" required />
+                <label for="email">College Email</label>
+                <input type="text" id="email" name="email" required />
+                <label for="usrname">Username</label>
+                <input type="text" id="usrname" name="usrname" required />
+
+                <label for="psw">Password</label>
+                <input
+                    type="password"
+                    id="psw"
+                    name="psw"
+                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                    title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+                    required
+                />
+                <input type="checkbox" onclick="myFunction()" />Show Password
+                <input type="submit" value="Submit" />
+            </form>
+        </div>
+        <div id="messageRegID">
+            <h3>RegistrationID must contain the following:</h3>
+            <p id="digits" class="invalid">Exactly <b>9</b> digits from 0-9</p>
+        </div>
+
+        <div id="messageEmail">
+            <h3>Email must contain the following:</h3>
+            <p id="letter" class="invalid">Only <b>lowercase</b> letters</p>
+            <p id="ampersand" class="invalid">A <b>@</b> symbol</p>
+            <p id="dot" class="invalid">A <b>'.'</b></p>
+            <p id="collegeemail" class="invalid">End with <b>vjti.ac.in</b></p>
+        </div>
+        <div id="message">
+            <h3>Password must contain the following:</h3>
+            <p id="letterP" class="invalid">A <b>lowercase</b> letter</p>
+            <p id="capital" class="invalid">
+                A <b>capital (uppercase)</b> letter
+            </p>
+            <p id="number" class="invalid">A <b>number</b></p>
+            <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+        </div>
+    </body>
+    <script>
+        var myRegID = document.getElementById("regid");
+        var myEmail = document.getElementById("email");
+        var myInput = document.getElementById("psw");
+        var myUsername = document.getElementById("usrname");
+        var letterP = document.getElementById("letterP");
+        var letter = document.getElementById("letter");
+        var capital = document.getElementById("capital");
+        var number = document.getElementById("number");
+        var length = document.getElementById("length");
+        var regId = document.getElementById("messageRegID");
+        var email = document.getElementById("messageEmail");
+        var ampersand = document.getElementById("ampersand");
+        var dot = document.getElementById("dot");
+        var collegeemail = document.getElementById("collegeemail");
+        // Add an event listener to the form
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(";");
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == " ") {
+                    c = c.substring(1, c.length);
+                }
+                if (c.indexOf(nameEQ) == 0) {
+                    return c.substring(nameEQ.length, c.length);
+                }
+            }
+            return null;
+        }
+        var form = document.getElementById("myForm");
+        form.addEventListener("submit", submitForm);
+
+        // Define the submitForm function
+        function submitForm(event) {
+            // Prevent the default form submission behavior
+            event.preventDefault();
+            var savedMyInput = getCookie("myInput");
+            var savedMyRegID = getCookie("myRegID");
+            var savedMyEmail = getCookie("myEmail");
+            var savedMyUsername = getCookie("myUsrName");
+            if (
+                myInput.value == savedMyInput &&
+                myRegID.value == savedMyRegID &&
+                myEmail.value == savedMyEmail &&
+                myUsername.value == savedMyUsername
+            ) {
+                window.location.href = "home.html";
+            }
+        }
+        window.onload = function () {
+            var savedMyUsername = getCookie("myUsrName");
+            if (savedMyUsername) {
+                myUsername.value = savedMyUsername;
+                console.log(savedMyUsername);
+            }
+
+            var savedMyEmail = getCookie("myEmail");
+            if (savedMyEmail) {
+                myEmail.value = savedMyEmail;
+                console.log(savedMyEmail);
+            }
+
+            var savedMyRegID = getCookie("myRegID");
+            if (savedMyRegID) {
+                myRegID.value = savedMyRegID;
+                console.log(savedMyRegID);
+            }
+            var savedMyInput = getCookie("myInput");
+            if (savedMyInput) {
+                myInput.value = savedMyInput;
+                console.log(savedMyInput);
+            }
+        };
+        function myFunction() {
+            var x = document.getElementById("psw");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+    </script>
+</html>

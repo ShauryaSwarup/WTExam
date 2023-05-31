@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Home Page</title>
+    </head>
+    <body>
+        <h1>Home Page</h1>
+        <h2>Welcome</h2>
+        <table>
+            <tr>
+                <th>Subject</th>
+                <th>Marks</th>
+            </tr>
+            <tr>
+                <td>DSA</td>
+                <td>97/100</td>
+            </tr>
+            <tr>
+                <td>DMA</td>
+                <td>96/100</td>
+            </tr>
+            <tr>
+                <td>DLD</td>
+                <td>50/100</td>
+            </tr>
+            <tr>
+                <td>LA</td>
+                <td>96/100</td>
+            </tr>
+            <tr>
+                <td>AT</td>
+                <td>87/100</td>
+            </tr>
+        </table>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <canvas id="barChart" style="width: 400px; height: 300px"></canvas>
+        <canvas id="pieChart" style="width: 400px; height: 300px"></canvas>
+    </body>
+    <script>
+        // Add an event listener to the form
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(";");
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == " ") {
+                    c = c.substring(1, c.length);
+                }
+                if (c.indexOf(nameEQ) == 0) {
+                    return c.substring(nameEQ.length, c.length);
+                }
+            }
+            return null;
+        }
+
+        window.onload = function () {
+            var savedMyUsername = getCookie("myUsrName");
+            var savedMyEmail = getCookie("myEmail");
+            var savedMyRegID = getCookie("myRegID");
+
+            var welcomeText = "Welcome";
+
+            if (savedMyUsername) {
+                console.log(savedMyUsername);
+                welcomeText += " " + savedMyUsername;
+            }
+
+            if (savedMyEmail) {
+                console.log(savedMyEmail);
+                welcomeText += " | Email: " + savedMyEmail;
+            }
+
+            if (savedMyRegID) {
+                console.log(savedMyRegID);
+                welcomeText += " | RegID: " + savedMyRegID;
+            }
+
+            // Update the HTML tag with the welcome text
+            var welcomeElement = document.querySelector("h2");
+            welcomeElement.textContent = welcomeText;
+
+            var barChartData = {
+                labels: ["DSA", "DMA", "DLD", "LA", "AT"],
+                datasets: [
+                    {
+                        label: "Marks",
+                        data: [97, 96, 50, 96, 87],
+                        backgroundColor: "rgba(75, 192, 192, 0.6)",
+                        borderColor: "rgba(75, 192, 192, 1)",
+                        borderWidth: 1,
+                    },
+                ],
+            };
+
+            // Data for the pie chart
+            var pieChartData = {
+                labels: ["DSA", "DMA", "DLD", "LA", "AT"],
+                datasets: [
+                    {
+                        data: [97, 96, 50, 96, 87],
+                        backgroundColor: [
+                            "rgba(255, 99, 132, 0.6)",
+                            "rgba(54, 162, 235, 0.6)",
+                            "rgba(255, 206, 86, 0.6)",
+                            "rgba(75, 192, 192, 0.6)",
+                            "rgba(153, 102, 255, 0.6)",
+                        ],
+                        borderColor: [
+                            "rgba(255, 99, 132, 1)",
+                            "rgba(54, 162, 235, 1)",
+                            "rgba(255, 206, 86, 1)",
+                            "rgba(75, 192, 192, 1)",
+                            "rgba(153, 102, 255, 1)",
+                        ],
+                        borderWidth: 1,
+                    },
+                ],
+            };
+
+            // Create the bar chart
+            var barChart = new Chart(document.getElementById("barChart"), {
+                type: "bar",
+                data: barChartData,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                        },
+                    },
+                },
+            });
+
+            // Create the pie chart
+            var pieChart = new Chart(document.getElementById("pieChart"), {
+                type: "pie",
+                data: pieChartData,
+            });
+        };
+    </script>
+</html>
